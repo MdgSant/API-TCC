@@ -37,7 +37,7 @@ public class Duvida {
     private Utilizador utilizador;
 
     @ManyToOne
-    @JoinColumn(name = "idConteudo")
+    @JoinColumn(name = "idDisciplina")
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    private Conteudo conteudo;
+    private Disciplina disciplina;
 }

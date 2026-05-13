@@ -28,5 +28,4 @@ public class Conteudo {
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Disciplina disciplina;
 
-    // ⚠️ NÃO deve ter List<Duvida> aqui — causaria loop
 }
