@@ -1,8 +1,12 @@
 package br.com.opala.EstudeX.controller;
 
 import br.com.opala.EstudeX.entity.Atividade;
+import br.com.opala.EstudeX.repository.AtividadePerguntaRepository;
 import br.com.opala.EstudeX.repository.AtividadeRepository;
+import br.com.opala.EstudeX.repository.AtividadeRespostaRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,6 +18,12 @@ public class AtividadeController
 {
     @Autowired
     private AtividadeRepository repository;
+
+    @Autowired
+    private AtividadeRespostaRepository atividadeRespostaRepository;
+
+    @Autowired
+    private AtividadePerguntaRepository atividadePerguntaRepository;
 
     @GetMapping
     public List<Atividade> listar() {return repository.findAll();}
@@ -36,14 +46,12 @@ public class AtividadeController
         return repository.save(atividade);
     }
 
+    @Transactional
     @DeleteMapping("/{id}")
-    public void excluir(@PathVariable Integer id)
-    {
-        var atividade = repository.findById(id);
-
-        if(atividade.isPresent())
-        {
-            repository.deleteById(id);
-        }
+    public ResponseEntity<?> deletar(@PathVariable Integer id) {
+        atividadeRespostaRepository.deleteByAtividade_IdAtividade(id);
+        atividadePerguntaRepository.deleteByAtividade_IdAtividade(id);
+        repository.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 }

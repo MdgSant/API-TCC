@@ -1,5 +1,6 @@
 package br.com.opala.EstudeX.controller;
 
+import br.com.opala.EstudeX.entity.Atividade;
 import br.com.opala.EstudeX.entity.AtividadeResposta;
 import br.com.opala.EstudeX.repository.AtividadeRepository;
 import br.com.opala.EstudeX.repository.AtividadeRespostaRepository;
@@ -17,6 +18,11 @@ public class AtividadeRespostaController
 
     @GetMapping
     public List<AtividadeResposta> listar() {return repository.findAll();}
+
+    @GetMapping("/atividade/{idAtividade}")
+    public List<AtividadeResposta> listarPorAtividade(@PathVariable Integer idAtividade) {
+        return repository.findByAtividade_IdAtividade(idAtividade);
+    }
 
     @PostMapping
     public AtividadeResposta cadastrar(@RequestBody AtividadeResposta atividadeResposta)
