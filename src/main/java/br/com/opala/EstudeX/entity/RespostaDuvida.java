@@ -11,19 +11,23 @@ import java.time.LocalDateTime;
 @Setter
 @Entity
 @Table(name = "TBL_RESPOSTADUVIDA")
-public class RespostaDuvida
-{
+public class RespostaDuvida {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idDuvida")
     private Integer idDuvida;
+
     @Column(name = "Momento")
     private LocalDateTime momento;
+
     @Column(name = "ConteudoResposta")
-    private String ConteudoResposta;
+    private String conteudoResposta;
+
+    @ManyToOne
+    @JoinColumn(name = "idDuvida", insertable = false, updatable = false)
+    private Duvida duvida;
 
     @ManyToOne
     @JoinColumn(name = "idUtilizador")
     private Utilizador utilizador;
-
 }
