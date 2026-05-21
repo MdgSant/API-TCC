@@ -35,6 +35,10 @@ public class Atividade
     private Integer idOrientador; // guarda o ID do professor
 
     @ManyToOne
+    @JoinColumn(name = "idDisciplina")
+    private Disciplina disciplina;
+
+    @ManyToOne
     @JoinColumn(name = "idNivelDificuldade")
     private NivelDificuldade nivelDificuldade;
 
