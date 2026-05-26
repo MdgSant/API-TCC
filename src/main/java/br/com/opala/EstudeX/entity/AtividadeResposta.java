@@ -22,7 +22,7 @@ public class AtividadeResposta
 
     @ManyToOne
     @JoinColumn(name = "idAluno")
-    @JsonIgnoreProperties({"serie", "senha", "cpf", "foto"})
+    @JsonIgnoreProperties({"senha", "cpf", "foto"})
     private Aluno aluno;
 
     @ManyToOne

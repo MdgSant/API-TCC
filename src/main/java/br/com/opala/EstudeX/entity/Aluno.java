@@ -20,7 +20,7 @@ public class Aluno extends Utilizador
     @Column(name = "xp")
     private Integer xp;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idSerie")
     @JsonIgnoreProperties({"alunos", "comunicados"})
     private Serie serie;
