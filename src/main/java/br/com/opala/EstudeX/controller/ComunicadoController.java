@@ -23,4 +23,16 @@ public class ComunicadoController
     {
         return repository.save(comunicado);
     }
+
+    @GetMapping("/serie/{idSerie}")
+    public List<Comunicado> listarPorSerie(@PathVariable Integer idSerie) {
+        return repository.findBySerie_Id(idSerie);
+    }
+
+    @GetMapping("/serie/{idSerie}/disciplina/{idDisciplina}")
+    public List<Comunicado> listarPorSerieEDisciplina(
+            @PathVariable Integer idSerie,
+            @PathVariable Integer idDisciplina) {
+        return repository.findBySerie_IdAndDisciplina_Id(idSerie, idDisciplina);
+    }
 }

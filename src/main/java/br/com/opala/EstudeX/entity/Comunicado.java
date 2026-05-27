@@ -37,5 +37,9 @@ public class Comunicado
     @JoinColumn(name = "idSerie")
     private Serie serie;
 
+    @ManyToOne
+    @JoinColumn(name = "idDisciplina")
+    private Disciplina disciplina;
+
 
 }
