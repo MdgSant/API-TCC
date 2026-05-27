@@ -41,5 +41,10 @@ public class Comunicado
     @JoinColumn(name = "idDisciplina")
     private Disciplina disciplina;
 
+    @PrePersist
+    public void prePersist() {
+        this.dataPublicacao = new Timestamp(System.currentTimeMillis());
+    }
+
 
 }

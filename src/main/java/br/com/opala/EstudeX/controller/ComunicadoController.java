@@ -35,4 +35,15 @@ public class ComunicadoController
             @PathVariable Integer idDisciplina) {
         return repository.findBySerie_IdAndDisciplina_Id(idSerie, idDisciplina);
     }
+
+    @DeleteMapping("/{id}")
+    public void excluir(@PathVariable Integer id)
+    {
+        var comunicado = repository.findById(id);
+
+        if(comunicado.isPresent())
+        {
+            repository.deleteById(id);
+        }
+    }
 }
