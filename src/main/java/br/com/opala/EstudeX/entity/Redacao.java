@@ -18,7 +18,7 @@ public class Redacao
 
     @ManyToOne
     @JoinColumn(name = "idAluno")
-    @JsonIgnoreProperties({"senha", "cpf", "foto"})
+    @JsonIgnoreProperties({"senha", "cpf", "foto", "tipoUtilizador", "serie", "uf", "cidade"})
     private Utilizador aluno;
 
     @Column(name = "Tema", nullable = false)

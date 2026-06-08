@@ -25,7 +25,7 @@ public class CorrecaoRedacao
 
     @ManyToOne
     @JoinColumn(name = "idUtilizador")
-    @JsonIgnoreProperties({"senha", "cpf", "foto"})
+    @JsonIgnoreProperties({"senha", "cpf", "foto", "tipoUtilizador", "serie", "uf", "cidade"})
     private Utilizador utilizador;
 
     @Column(name = "PontuacaoObtida")

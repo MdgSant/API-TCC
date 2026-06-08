@@ -12,10 +12,6 @@ import lombok.Setter;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Aluno extends Utilizador
 {
-    @Id
-    @Column(name = "idUtilizador")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
 
     @Column(name = "xp")
     private Integer xp;

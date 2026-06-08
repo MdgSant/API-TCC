@@ -4,6 +4,7 @@ import br.com.opala.EstudeX.entity.Aluno;
 import br.com.opala.EstudeX.entity.Utilizador;
 import br.com.opala.EstudeX.repository.AlunoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,12 +26,11 @@ public class AlunoController
 
 
     @GetMapping("/{id}")
-    public Optional<Aluno> buscarPorId(@PathVariable("id") Integer id)
+    public ResponseEntity<Aluno> buscarPorId(@PathVariable("id") Integer id)
     {
-        var aluno = repository.findById(id);
-        if(aluno.isPresent())
-            return aluno;
-        return null;
+        return repository.findById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping("/serie/{idSerie}")
@@ -46,13 +46,13 @@ public class AlunoController
     }//falar com o ronqui
 
     @PutMapping("/{id}")
-    public Aluno alterar(@RequestBody Aluno aluno, @PathVariable Integer id)//alterar status
+    public ResponseEntity<Aluno> alterar(@RequestBody Aluno aluno, @PathVariable Integer id)
     {
-        if(id == aluno.getId() && buscarPorId(id).isPresent())
+        if(id.equals(aluno.getId()) && repository.existsById(id))
         {
-            return repository.save(aluno);
+            return ResponseEntity.ok(repository.save(aluno));
         }
-        return null;
+        return ResponseEntity.notFound().build();
     }
 
 
