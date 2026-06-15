@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface RedacaoRepository extends JpaRepository<Redacao, Integer> {
 
-    @Query("SELECT r FROM Redacao r WHERE r.aluno.idUtilizador = :idAluno")
+    @Query("SELECT r FROM Redacao r WHERE r.aluno.id = :idAluno")
     List<Redacao> findByAlunoId(@Param("idAluno") Integer idAluno);
 
     @Query("SELECT r FROM Redacao r WHERE r.pontuacaoObtida IS NULL")
