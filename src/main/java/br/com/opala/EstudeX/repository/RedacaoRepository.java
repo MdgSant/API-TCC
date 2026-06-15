@@ -9,13 +9,16 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface RedacaoRepository extends JpaRepository<Redacao, Integer>
-{
-    @Query("SELECT r FROM Redacao r WHERE r.aluno.id = :idAluno")
+public interface RedacaoRepository extends JpaRepository<Redacao, Integer> {
+
+    @Query("SELECT r FROM Redacao r WHERE r.aluno.idUtilizador = :idAluno")
     List<Redacao> findByAlunoId(@Param("idAluno") Integer idAluno);
 
     @Query("SELECT r FROM Redacao r WHERE r.pontuacaoObtida IS NULL")
     List<Redacao> findPendentes();
+
+    @Query("SELECT a.serie.nomeSerie FROM Aluno a WHERE a.id = :idAluno")
+    String findSerieByAlunoId(@Param("idAluno") Integer idAluno);
 
     @Query("SELECT COALESCE(MAX(r.idRedacao), 0) FROM Redacao r")
     Integer getMaxId();

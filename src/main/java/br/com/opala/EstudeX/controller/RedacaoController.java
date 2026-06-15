@@ -10,14 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/redacoes")
-public class RedacaoController
-{
+public class RedacaoController {
     @Autowired
     private RedacaoRepository repository;
 
@@ -33,8 +33,28 @@ public class RedacaoController
     }
 
     @GetMapping("/{id}")
-    public Redacao buscarPorId(@PathVariable Integer id) {
-        return repository.findById(id).orElseThrow();
+    public ResponseEntity<?> buscarPorId(@PathVariable Integer id) {
+        Redacao redacao = repository.findById(id).orElseThrow();
+
+        String nomeSerie = "Não definida";
+        try {
+            nomeSerie = repository.findSerieByAlunoId(redacao.getAluno().getId());
+            if (nomeSerie == null)
+                nomeSerie = "Não definida";
+        } catch (Exception ignored) {
+        }
+
+        Map<String, Object> resultado = new LinkedHashMap<>();
+        resultado.put("idRedacao", redacao.getIdRedacao());
+        resultado.put("aluno", redacao.getAluno());
+        resultado.put("tema", redacao.getTema());
+        resultado.put("titulo", redacao.getTitulo());
+        resultado.put("textoRedacao", redacao.getTextoRedacao());
+        resultado.put("pontuacaoObtida", redacao.getPontuacaoObtida());
+        resultado.put("comentarios", redacao.getComentarios());
+        resultado.put("turma", nomeSerie);
+
+        return ResponseEntity.ok(resultado);
     }
 
     @GetMapping("/aluno/{idAluno}")
@@ -85,10 +105,6 @@ public class RedacaoController
     public ResponseEntity<?> criarProposta(@RequestBody Map<String, Object> payload) {
         try {
             Redacao redacao = new Redacao();
-
-            // Gerar ID manualmente (pegar o maior ID + 1)
-            Integer novoId = repository.getMaxId() + 1;
-            redacao.setIdRedacao(novoId);
 
             // Usar o professor como "aluno placeholder" (ID 6)
             Utilizador professor = utilizadorRepository.findById(6).orElse(null);
